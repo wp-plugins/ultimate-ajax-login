@@ -3,7 +3,7 @@ Contributors: arbet01
 Tags: admin, AJAX, AJAX login, login, multi-site, redirect, registration, sidebar, jquery, popup, dialog, login dialog, login popup, mobile
 Requires at least: 3.1
 Tested up to: 4.1
-Stable tag: 1.2
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,6 +58,9 @@ Just copy the template widget-dialog.php to ultimate_ajax_login/widget-dialog.ph
 4. Modal login form on Twenty Fourteen theme
 
 == Changelog ==
+
+= 1.2 = 
+* Added settings to allow further customizations of plugin (Custom error message, Custom text in login form...)
 
 = 1.1 = 
 * Added a new modal layout

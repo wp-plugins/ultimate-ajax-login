@@ -50,8 +50,26 @@ class UAL_Main {
 	register_setting( 'ual-site-options', 
 		'ual_redirect_login', 
 		'esc_url_raw' // Validates the URL
-	);	
+	);
+	
+	// Login Button text
+	register_setting( 'ual-site-options', 
+		'ual_login_button_text', 
+		'wp_kses_post' // Allows HTML tags
+	);		
 		
+	// Text above form
+	register_setting( 'ual-site-options', 
+		'ual_text_above_form', 
+		'wp_kses_post' // Allows HTML tags
+	);	
+	
+	// Text above form
+	register_setting( 'ual-site-options', 
+		'ual_login_error_msg', 
+		'wp_kses_post' // Allows HTML tags
+	);		
+	
     }
     
     
@@ -63,12 +81,24 @@ class UAL_Main {
 	// Get login redirect URL
 	$redirect_login = $_POST['ual_redirect_login'];
 	
+	// Get login button text
+	$login_button_text = $_POST['ual_login_button_text'];
+	
+	// Get text above form
+	$text_above_form = $_POST['ual_text_above_form'];
+	
+	// Get custom error text
+	$custom_login_error_msg = $_POST['ual_login_error_msg'];
+	
 	// Validate the URL
 	$sanitized_location = wp_sanitize_redirect($redirect_login);	
 	$valid_location = wp_validate_redirect($sanitized_location, admin_url());
 	
-	// Read $_POST fields, and use update_option function to save
+	// Save options to database
 	update_option('ual_redirect_login', $valid_location);
+	update_option('ual_login_button_text', $login_button_text);
+	update_option('ual_text_above_form', $text_above_form);
+	update_option('ual_login_error_msg', $custom_login_error_msg);
 	
     }
     

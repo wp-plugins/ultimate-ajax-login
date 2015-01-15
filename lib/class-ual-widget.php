@@ -73,7 +73,22 @@ class UAL_Widget extends WP_Widget {
 	
 	// User not signed in properly
 	if (is_wp_error($user)){
-	    $response['error'] = $user->get_error_message();
+	    
+	    // Check if the user has specified a custom error message, and return it
+	    if(get_option('ual_login_error_msg') != ''){
+		$response['error'] = get_option('ual_login_error_msg');
+		
+		// Specify that this is a custom error
+		$response['custom_error'] = true;
+	    }
+	    
+	    // No custom error message has been specified, use WordPress default
+	    else {
+		$response['error'] = $user->get_error_message();
+		
+		// This is not a custom error
+		$response['custom_error'] = false;		
+	    }
 	    $response['logged_in'] = false;
 	}
 	
@@ -399,7 +414,7 @@ class UAL_Widget extends WP_Widget {
 	    <br/><br/>
 	    <!-- Redirect URL Field -->
 	    <label for="<?php echo $this->get_field_id( 'redirect_login' ); ?>"><?php _e( 'Override Redirect URL in Settings Page' ); ?></label> 
-	    <input class="widefat" id="<?php echo $this->get_field_id( 'redirect_login' ); ?>" name="<?php echo $this->get_field_name( 'redirect_login' ); ?>" type="text" value="<?php echo esc_attr( $redirect_url ); ?>">
+	    <input class="widefat" id="<?php echo $this->get_field_id( 'redirect_login' ); ?>" name="<?php echo $this->get_field_name( 'redirect_login' ); ?>" type="text" value="<?php echo esc_attr( $redirect_url ); ?>"><br/><br/>
 	</p>
 
 	<?php 
@@ -463,6 +478,11 @@ class UAL_Widget extends WP_Widget {
 	
 	// Require template parser
 	require_once(UAL_PATH.'/lib/class-ual-template.php');
+	
+	
+	// Get widget settings which will be used in all templates
+	$widget_settings = $this->get_settings();
+	$settings = array_pop($widget_settings);
 	
 	// Load template
 	require_once($template);
